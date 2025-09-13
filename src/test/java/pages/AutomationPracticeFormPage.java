@@ -1,15 +1,15 @@
 package pages;
-
 import com.codeborne.selenide.SelenideElement;
+import pages.components.CalendarComponent;
 import pages.components.ResultsTable;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AutomationPracticeFormPage {
 
     private final ResultsTable resultsTable = new ResultsTable();
+    private final CalendarComponent calendar = new CalendarComponent();
 
     // elements
     private final SelenideElement
@@ -30,6 +30,10 @@ public class AutomationPracticeFormPage {
     // actions
     public AutomationPracticeFormPage openPage() {
         open("/automation-practice-form");
+        return this;
+    }
+
+    public AutomationPracticeFormPage removeBanners() {
         executeJavaScript("$('footer').remove();");
         executeJavaScript("$('#fixedban').remove();");
         return this;
@@ -62,9 +66,7 @@ public class AutomationPracticeFormPage {
 
     public AutomationPracticeFormPage setDateOfBirth(String day, String month, String year) {
         dateOfBirthInput.click();
-        $(".react-datepicker__month-select").selectOption(month);
-        $(".react-datepicker__year-select").selectOption(year);
-        $$(".react-datepicker__day").findBy(text(day)).click();
+        calendar.setDate(day, month, year);
         return this;
     }
 
@@ -90,13 +92,13 @@ public class AutomationPracticeFormPage {
 
     public AutomationPracticeFormPage selectState(String value) {
         state.click();
-        $("#react-select-3-option-2").click(); // для упрощения
+        $("#stateCity-wrapper").$(byText(value)).click();
         return this;
     }
 
     public AutomationPracticeFormPage selectCity(String value) {
         city.click();
-        $("#react-select-4-option-1").click();
+        $("#stateCity-wrapper").$(byText(value)).click();
         return this;
     }
 
@@ -105,7 +107,8 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    public ResultsTable resultsTable() {
-        return resultsTable;
+    public AutomationPracticeFormPage checkTable(String key, String value) {
+        resultsTable.checkResult(key, value);
+        return this;
     }
 }

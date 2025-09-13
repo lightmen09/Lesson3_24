@@ -19,6 +19,7 @@ public class RegistrationWithPageObjects {
     @Test
     void fillFormFullDataTest() {
         formPage.openPage()
+                .removeBanners()
                 .setFirstName("Tom")
                 .setLastName("Jerry")
                 .setEmail("TomJerry@disney.com")
@@ -31,18 +32,18 @@ public class RegistrationWithPageObjects {
                 .setAddress("Home")
                 .selectState("Haryana")
                 .selectCity("Panipat")
-                .submit();
+                .submit()
 
-        formPage.resultsTable().checkResult("Student Name", "Tom Jerry");
-        formPage.resultsTable().checkResult("Student Email", "TomJerry@disney.com");
-        formPage.resultsTable().checkResult("Gender", "Male");
-        formPage.resultsTable().checkResult("Mobile", "1234567890");
-        formPage.resultsTable().checkResult("Date of Birth", "9 August,1999");
-        formPage.resultsTable().checkResult("Subjects", "Economics");
-        formPage.resultsTable().checkResult("Hobbies", "Sports");
-        formPage.resultsTable().checkResult("Picture", "1234.png");
-        formPage.resultsTable().checkResult("Address", "Home");
-        formPage.resultsTable().checkResult("State and City", "Haryana Panipat");
+                .checkTable("Student Name", "Tom Jerry")
+                .checkTable("Student Email", "TomJerry@disney.com")
+                .checkTable("Gender", "Male")
+                .checkTable("Mobile", "1234567890")
+                .checkTable("Date of Birth", "9 August,1999")
+                .checkTable("Subjects", "Economics")
+                .checkTable("Hobbies", "Sports")
+                .checkTable("Picture", "1234.png")
+                .checkTable("Address", "Home")
+                .checkTable("State and City", "Haryana Panipat");
     }
 
     @Test
@@ -52,11 +53,11 @@ public class RegistrationWithPageObjects {
                 .setLastName("OnlyLast")
                 .selectGender("Male")
                 .setPhone("9876543210")
-                .submit();
+                .submit()
 
-        formPage.resultsTable().checkResult("Student Name", "OnlyName OnlyLast");
-        formPage.resultsTable().checkResult("Gender", "Male");
-        formPage.resultsTable().checkResult("Mobile", "9876543210");
+        .checkTable("Student Name", "OnlyName OnlyLast")
+        .checkTable("Gender", "Male")
+        .checkTable("Mobile", "9876543210");
     }
 
     @Test
@@ -67,9 +68,9 @@ public class RegistrationWithPageObjects {
                 .setEmail("invalidEmail")
                 .selectGender("Male")
                 .setPhone("1112223333")
-                .submit();
+                .submit()
 
-        formPage.resultsTable().checkResult("Student Name", "Bad Email");
+        .checkTable("Student Name", "Bad Email");
 
     }
 }
