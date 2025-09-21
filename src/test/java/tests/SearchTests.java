@@ -1,5 +1,6 @@
+package tests;
+
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -19,8 +20,7 @@ public class SearchTests {
     void successfulSearchTestNew() {
         Configuration.pageLoadStrategy = "eager";
         open("https://bing.com/");
-222222222222222222
-        33333333333333
-    444444444
+        $("[name=q]").setValue("yandex").pressEnter();
+        $("html").shouldHave(text("https://ya.ru"));
     }
 }
